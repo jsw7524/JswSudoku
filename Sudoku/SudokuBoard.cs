@@ -7,6 +7,12 @@
         public SudokuRow[] Rows= new SudokuRow[9];
         public SudokuColumn[] Columns = new SudokuColumn[9];
 
+        public int this[int y, int x]
+        {
+            get => Rows[y].cells[x].Value;
+            set => Rows[y].cells[x].Value = value;
+        }
+
         public SudokuBoard(int[,] d)
         {
             data = d.Clone() as int[,];
@@ -26,6 +32,8 @@
                 Columns[i] = new SudokuColumn(data, this, new RowColumn { y = 0, x = i });
             }
         }
+
+
 
         public bool ValidateNumbers()
         { 

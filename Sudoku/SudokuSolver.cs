@@ -6,16 +6,6 @@ using System.Threading.Tasks;
 
 namespace Sudoku
 {
-    public class PossibleValuesInCell
-    {
-        public SudokuCell cell;
-        public int[] possibleValues = new int[10]; //negative values mean impossible.
-
-        public PossibleValuesInCell(SudokuCell c)
-        {
-            cell = c;
-        }
-    }
 
     public class SudokuSolver
     {
@@ -40,6 +30,16 @@ namespace Sudoku
         public void AddStrategy(IStrategy stg)
         {
             Strategies.Add(stg);
+        }
+
+        public SudokuSolver()
+        {
+            StrategyColumn stgclm = new StrategyColumn();
+            StrategyRow stgRow = new StrategyRow();
+            StrategyBlock stgBlk = new StrategyBlock();
+            this.AddStrategy(stgclm);
+            this.AddStrategy(stgRow);
+            this.AddStrategy(stgBlk);
         }
 
         public PossibleValuesInCell EvaluatePossibleValuesInCell(SudokuBoard board, SudokuCell c)

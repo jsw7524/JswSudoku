@@ -217,6 +217,14 @@ namespace UnitTestProject1
             SudokuBoard board = new SudokuBoard(data);
             Assert.AreEqual(true, board.ValidateNumbers());
         }
+
+        [TestMethod]
+        public void TestMethod26()
+        {
+            SudokuBoard board = new SudokuBoard(data);
+            board[4, 4] = 0;
+            Assert.AreEqual(0, board[4, 4]);
+        }
     }
 
 
@@ -257,7 +265,7 @@ namespace UnitTestProject1
             SudokuSolver solver = new SudokuSolver();
             StrategyRow stgRow = new StrategyRow();
             var result = solver.GetEmptyCells(board);
-            var pvc = new PossibleValuesInCell(result.Where(c=>c.absX==0&&c.absY==0).FirstOrDefault());
+            var pvc = new PossibleValuesInCell(result.Where(c => c.absX == 0 && c.absY == 0).FirstOrDefault());
             stgRow.Evaluate(board, pvc);
             Assert.AreEqual(1, pvc.possibleValues[4]);
         }
@@ -280,29 +288,36 @@ namespace UnitTestProject1
         {
             SudokuBoard board = new SudokuBoard(data);
             SudokuSolver solver = new SudokuSolver();
-            StrategyColumn stgclm = new StrategyColumn();
             StrategyRow stgRow = new StrategyRow();
-            solver.AddStrategy(stgclm);
-            solver.AddStrategy(stgRow);
-            var pvc = solver.EvaluatePossibleValuesInCell(board, solver.GetEmptyCells(board).Where(c => c.absX == 4 && c.absY == 4).FirstOrDefault());
-            Assert.AreEqual(2, pvc.possibleValues[7]);
+            var result = solver.GetEmptyCells(board);
+            var pvc = new PossibleValuesInCell(result.Where(c => c.absX == 8 && c.absY == 8).FirstOrDefault());
+            stgRow.Evaluate(board, pvc);
+            Assert.AreEqual(1, pvc.possibleValues[3]);
         }
-
 
         [TestMethod]
         public void TestMethod5()
         {
             SudokuBoard board = new SudokuBoard(data);
             SudokuSolver solver = new SudokuSolver();
-            StrategyColumn stgclm = new StrategyColumn();
-            StrategyRow stgRow = new StrategyRow();
             StrategyBlock stgBlk = new StrategyBlock();
-            solver.AddStrategy(stgclm);
-            solver.AddStrategy(stgRow);
-            solver.AddStrategy(stgBlk);
+            var result = solver.GetEmptyCells(board);
+            var pvc = new PossibleValuesInCell(result.Where(c => c.absX == 8 && c.absY == 8).FirstOrDefault());
+            stgBlk.Evaluate(board, pvc);
+            Assert.AreEqual(1, pvc.possibleValues[3]);
+        }
+
+        [TestMethod]
+        public void TestMethod6()
+        {
+            SudokuBoard board = new SudokuBoard(data);
+            SudokuSolver solver = new SudokuSolver();
             var pvc = solver.EvaluatePossibleValuesInCell(board, solver.GetEmptyCells(board).Where(c => c.absX == 4 && c.absY == 4).FirstOrDefault());
             Assert.AreEqual(3, pvc.possibleValues[7]);
         }
+
+
+
 
     }
 
