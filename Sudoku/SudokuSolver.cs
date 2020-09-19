@@ -6,6 +6,13 @@ using System.Threading.Tasks;
 
 namespace Sudoku
 {
+    public class ValueWithProbability
+    {
+        public SudokuCell cell;
+        public int value;
+        public double probability;
+    }
+
 
     public class SudokuSolver
     {
@@ -52,6 +59,34 @@ namespace Sudoku
             return pvc;
         }
 
+        public IEnumerable<ValueWithProbability> MakeCellValueWithProbability(SudokuBoard board, IEnumerable<SudokuCell> emptyCells)
+        {
+            List<PossibleValuesInCell> possibleValuesInCell = new List<PossibleValuesInCell>();
+            foreach (var c in emptyCells)
+            {
+                possibleValuesInCell.Add(EvaluatePossibleValuesInCell(board, c));
+            }
+            List<ValueWithProbability> result = new List<ValueWithProbability>();
+            foreach (var pvc in possibleValuesInCell)
+            {
+                double sum = pvc.possibleValues.Where(c => c > 0).Sum();
+                for (int i = 1; i < 10; i++)
+                {
+                    if (pvc.possibleValues[i] > 0)
+                    {
+                        var vp = new ValueWithProbability() { cell = pvc.cell, value = i, probability = pvc.possibleValues[i] / sum };
+                        result.Add(vp);
+                    }
+                }
+            }
+            return result;
+        }
+
+        public SudokuBoard Solve(SudokuBoard board)
+        {
+            var emptyCells = GetEmptyCells(board);
+            return board;
+        }
 
     }
 }

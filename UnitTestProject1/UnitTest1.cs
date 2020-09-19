@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using Sudoku;
@@ -244,9 +245,24 @@ namespace UnitTestProject1
 
         int[,] data = null;
 
+        string data2Json = @"[
+[0,0,4,9,0,7,0,0,0],
+[0,2,0,3,0,0,0,8,9],
+[7,0,0,1,0,0,0,0,6],
+[0,0,0,0,0,8,0,0,0],
+[0,5,0,0,7,0,1,0,8],
+[8,9,7,6,1,0,0,0,2],
+[3,4,8,5,6,0,0,7,1],
+[0,6,0,7,0,4,0,0,0],
+[9,7,2,0,3,0,5,6,0]]";
+
+        int[,] data2 = null;
+
+
         public UnitTestSudokuSolver()
         {
             data = JsonConvert.DeserializeObject<int[,]>(dataJson);
+            data2 = JsonConvert.DeserializeObject<int[,]>(data2Json);
         }
 
         [TestMethod]
@@ -317,7 +333,50 @@ namespace UnitTestProject1
         }
 
 
+        [TestMethod]
+        public void TestMethod7()
+        {
+            SudokuBoard board = new SudokuBoard(data);
+            SudokuSolver solver = new SudokuSolver();
+            var emptyCells = solver.GetEmptyCells(board);
+            var result = solver.MakeCellValueWithProbability(board, emptyCells);
+            Assert.AreEqual(7, result.Where(r=>r.cell.absX==4 && r.cell.absY == 4).FirstOrDefault().value);
+        }
 
+        [TestMethod]
+        public void TestMethod8()
+        {
+            SudokuBoard board = new SudokuBoard(data);
+            SudokuSolver solver = new SudokuSolver();
+            var emptyCells = solver.GetEmptyCells(board);
+            var result = solver.MakeCellValueWithProbability(board, emptyCells);
+            Assert.AreEqual(1.0, result.Where(r => r.cell.absX == 4 && r.cell.absY == 4).FirstOrDefault().probability);
+        }
+
+        [TestMethod]
+        public void TestMethod9()
+        {
+            SudokuBoard board = new SudokuBoard(data2);
+            SudokuSolver solver = new SudokuSolver();
+            var emptyCells1 = solver.GetEmptyCells(board);
+            var result1 = solver.MakeCellValueWithProbability(board, emptyCells1).OrderByDescending(c=>c.probability);
+
+            var trialCell = result1.FirstOrDefault();
+            int trialValue= trialCell.value;
+            trialCell.cell.Value = trialValue;
+            //////////////////////
+            var emptyCells2 = solver.GetEmptyCells(board);
+            var result2 = solver.MakeCellValueWithProbability(board, emptyCells2).OrderByDescending(c => c.probability);
+            //////////////////////////////////////
+            trialCell.cell.Value = 0;
+            var emptyCells3 = solver.GetEmptyCells(board);
+            var result3 = solver.MakeCellValueWithProbability(board, emptyCells3).OrderByDescending(c => c.probability);
+            ////////////////
+            Assert.AreEqual(result1.Count(), result3.Count());
+            Assert.AreEqual(result1.Last().probability, result3.Last().probability);
+            Assert.AreEqual(result1.Last().value, result3.Last().value);
+            Assert.AreEqual(result1.First().value, result3.First().value);
+        }
 
     }
 
