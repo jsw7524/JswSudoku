@@ -98,5 +98,55 @@ namespace UnitTestProject1
             Assert.AreEqual(8, board.Rows[3].cells[6].Value);
         }
 
+        [TestMethod]
+        public void TestMethod11()
+        {
+            SudokuBoard board = new SudokuBoard(data);
+            Assert.AreEqual(4, board.Columns[0].cells[0].Value);
+        }
+
+        [TestMethod]
+        public void TestMethod12()
+        {
+            SudokuBoard board = new SudokuBoard(data);
+            Assert.AreEqual(1, board.Columns[2].cells[0].Value);
+        }
+
+        [TestMethod]
+        public void TestMethod13()
+        {
+            SudokuBoard board = new SudokuBoard(data);
+            Assert.AreEqual(5, board.Columns[7].cells[2].Value);
+        }
+        [TestMethod]
+        public void TestMethod14()
+        {
+            SudokuBoard board = new SudokuBoard(data);
+            Assert.AreEqual(7, board.Columns[4].cells[4].Value);
+        }
+
+        [TestMethod]
+        public void TestMethod15()
+        {
+            SudokuBoard board = new SudokuBoard(data);
+            board.Columns[4].cells[4].Value = 0;
+            Assert.AreEqual(0, board.Rows[4].cells[4].Value);
+        }
+
+        [TestMethod]
+        public void TestMethod16()
+        {
+            SudokuBoard board = new SudokuBoard(data);
+            board.Columns[4].cells[4].Value = 0;
+            Assert.AreEqual(0, board.Blocks[1, 1].cells[1, 1].Value);
+        }
+
+        [TestMethod]
+        public void TestMethod17()
+        {
+            SudokuBoard board = new SudokuBoard(data);
+            board.Rows[4].cells[4].Value = 0;
+            Assert.AreEqual(0, board.Blocks[1, 1].cells[1, 1].Value);
+        }
     }
 }

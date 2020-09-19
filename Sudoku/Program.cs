@@ -80,7 +80,24 @@ namespace Sudoku
                 cells[i] = parentBoard.Blocks[positionRow.y / 3, i / 3].cells[positionRow.y % 3, i % 3];
             }
         }
+    }
 
+    public class SudokuColumn
+    {
+        public SudokuCell[] cells = new SudokuCell[9];
+        public int[,] data = null;
+        public SudokuBoard parentBoard = null;
+        public RowColumn positionColumn = null;
+        public SudokuColumn(int[,] d, SudokuBoard p, RowColumn pos)
+        {
+            parentBoard = p;
+            data = d;
+            positionColumn = pos;
+            for (int i = 0; i < 9; i++)
+            {
+                cells[i] = parentBoard.Blocks[i / 3,positionColumn.x / 3].cells[i % 3, positionColumn.x % 3];
+            }
+        }
     }
 
     public class SudokuBoard
@@ -88,6 +105,9 @@ namespace Sudoku
         public int[,] data = new int[9, 9];
         public SudokuBlock[,] Blocks = new SudokuBlock[3, 3];
         public SudokuRow[] Rows= new SudokuRow[9];
+
+        public SudokuColumn[] Columns = new SudokuColumn[9];
+
         public SudokuBoard(int[,] d)
         {
             data = d.Clone() as int[,];
@@ -102,8 +122,11 @@ namespace Sudoku
             {
                 Rows[i] = new SudokuRow(data, this, new RowColumn { y = i, x = 0 });
             }
+            for (int i = 0; i < 9; i++)
+            {
+                Columns[i] = new SudokuColumn(data, this, new RowColumn { y = 0, x = i });
+            }
         }
-
     }
 
     class Program
