@@ -28,7 +28,7 @@
         }
 
         public bool ValidateNumbers()
-        {
+        { 
             foreach (IValidatable b in Blocks)
             {
                 if (false == b.ValidateNumbers())

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using Sudoku;
@@ -6,7 +7,7 @@ using Sudoku;
 namespace UnitTestProject1
 {
     [TestClass]
-    public class UnitTest1
+    public class UnitTestSudokuBoard
     {
         string dataJson = @"[
 [4, 3, 1, 2, 5, 7, 6, 9, 8], 
@@ -19,11 +20,25 @@ namespace UnitTestProject1
 [5, 6, 4, 9, 8, 3, 7, 2, 1], 
 [9, 8, 7, 5, 2, 1, 4, 6, 3]]";
 
+
+        string invalidJson = @"[
+[4, 3, 1, 2, 5, 7, 6, 9, 8], 
+[2, 5, 8, 6, 3, 9, 1, 7, 4], 
+[6, 7, 9, 1, 4, 8, 3, 5, 2], 
+[1, 2, 5, 4, 9, 6, 8, 3, 7], 
+[8, 4, 6, 3, 5, 5, 2, 1, 9], 
+[7, 9, 3, 8, 1, 2, 5, 4, 6], 
+[3, 1, 2, 7, 6, 4, 9, 8, 5], 
+[5, 6, 4, 9, 8, 3, 7, 2, 1], 
+[9, 8, 7, 5, 2, 1, 4, 6, 3]]";
+
+        int[,] invalid = null;
         int[,] data = null;
 
-        public UnitTest1()
+        public UnitTestSudokuBoard()
         {
             data = JsonConvert.DeserializeObject<int[,]>(dataJson);
+            invalid = JsonConvert.DeserializeObject<int[,]>(invalidJson);
         }
 
         [TestMethod]
@@ -172,34 +187,12 @@ namespace UnitTestProject1
         [TestMethod]
         public void TestMethod21()
         {
-            string invalidJson = @"[
-[4, 3, 1, 2, 5, 7, 6, 9, 8], 
-[2, 5, 8, 6, 3, 9, 1, 7, 4], 
-[6, 7, 9, 1, 4, 8, 3, 5, 2], 
-[1, 2, 5, 4, 9, 6, 8, 3, 7], 
-[8, 4, 6, 3, 5, 5, 2, 1, 9], 
-[7, 9, 3, 8, 1, 2, 5, 4, 6], 
-[3, 1, 2, 7, 6, 4, 9, 8, 5], 
-[5, 6, 4, 9, 8, 3, 7, 2, 1], 
-[9, 8, 7, 5, 2, 1, 4, 6, 3]]";
-            int[,] invalid = JsonConvert.DeserializeObject<int[,]>(invalidJson);
             SudokuBoard board = new SudokuBoard(invalid);
             Assert.AreEqual(false, board.Blocks[1, 1].ValidateNumbers());
         }
         [TestMethod]
         public void TestMethod22()
         {
-            string invalidJson = @"[
-[4, 3, 1, 2, 5, 7, 6, 9, 8], 
-[2, 5, 8, 6, 3, 9, 1, 7, 4], 
-[6, 7, 9, 1, 4, 8, 3, 5, 2], 
-[1, 2, 5, 4, 9, 6, 8, 3, 7], 
-[8, 4, 6, 3, 5, 5, 2, 1, 9], 
-[7, 9, 3, 8, 1, 2, 5, 4, 6], 
-[3, 1, 2, 7, 6, 4, 9, 8, 5], 
-[5, 6, 4, 9, 8, 3, 7, 2, 1], 
-[9, 8, 7, 5, 2, 1, 4, 6, 3]]";
-            int[,] invalid = JsonConvert.DeserializeObject<int[,]>(invalidJson);
             SudokuBoard board = new SudokuBoard(invalid);
             Assert.AreEqual(false, board.Rows[4].ValidateNumbers());
         }
@@ -207,17 +200,6 @@ namespace UnitTestProject1
         [TestMethod]
         public void TestMethod23()
         {
-            string invalidJson = @"[
-[4, 3, 1, 2, 5, 7, 6, 9, 8], 
-[2, 5, 8, 6, 3, 9, 1, 7, 4], 
-[6, 7, 9, 1, 4, 8, 3, 5, 2], 
-[1, 2, 5, 4, 9, 6, 8, 3, 7], 
-[8, 4, 6, 3, 5, 5, 2, 1, 9], 
-[7, 9, 3, 8, 1, 2, 5, 4, 6], 
-[3, 1, 2, 7, 6, 4, 9, 8, 5], 
-[5, 6, 4, 9, 8, 3, 7, 2, 1], 
-[9, 8, 7, 5, 2, 1, 4, 6, 3]]";
-            int[,] invalid = JsonConvert.DeserializeObject<int[,]>(invalidJson);
             SudokuBoard board = new SudokuBoard(invalid);
             Assert.AreEqual(false, board.Columns[4].ValidateNumbers());
         }
@@ -225,17 +207,6 @@ namespace UnitTestProject1
         [TestMethod]
         public void TestMethod24()
         {
-            string invalidJson = @"[
-[4, 3, 1, 2, 5, 7, 6, 9, 8], 
-[2, 5, 8, 6, 3, 9, 1, 7, 4], 
-[6, 7, 9, 1, 4, 8, 3, 5, 2], 
-[1, 2, 5, 4, 9, 6, 8, 3, 7], 
-[8, 4, 6, 3, 5, 5, 2, 1, 9], 
-[7, 9, 3, 8, 1, 2, 5, 4, 6], 
-[3, 1, 2, 7, 6, 4, 9, 8, 5], 
-[5, 6, 4, 9, 8, 3, 7, 2, 1], 
-[9, 8, 7, 5, 2, 1, 4, 6, 3]]";
-            int[,] invalid = JsonConvert.DeserializeObject<int[,]>(invalidJson);
             SudokuBoard board = new SudokuBoard(invalid);
             Assert.AreEqual(false, board.ValidateNumbers());
         }
@@ -247,4 +218,37 @@ namespace UnitTestProject1
             Assert.AreEqual(true, board.ValidateNumbers());
         }
     }
+
+
+    [TestClass]
+    public class UnitTestSudokuSolver
+    {
+        string dataJson = @"[
+[0, 3, 1, 2, 5, 7, 6, 9, 8], 
+[2, 5, 8, 6, 3, 9, 1, 7, 4], 
+[6, 7, 9, 1, 4, 8, 3, 5, 2], 
+[1, 2, 5, 4, 9, 6, 8, 3, 7], 
+[8, 4, 6, 3, 0, 5, 2, 1, 9], 
+[7, 9, 3, 8, 1, 2, 5, 4, 6], 
+[3, 1, 2, 7, 6, 4, 9, 8, 5], 
+[5, 6, 4, 9, 8, 3, 7, 2, 1], 
+[9, 8, 7, 5, 2, 1, 4, 6, 0]]";
+
+        int[,] data = null;
+
+        public UnitTestSudokuSolver()
+        {
+            data = JsonConvert.DeserializeObject<int[,]>(dataJson);
+        }
+
+        [TestMethod]
+        public void TestMethod1()
+        {
+            SudokuBoard board = new SudokuBoard(data);
+            SudokuSolver solver = new SudokuSolver();
+            var result=solver.GetEmptyCells(board);
+            Assert.AreEqual(3, result.Count());
+        }
+    }
+
 }
