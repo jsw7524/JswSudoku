@@ -49,6 +49,8 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RowColumn.cs" />
+    <Compile Include="StrategyBlock.cs" />
+    <Compile Include="StrategyColumn.cs" />
     <Compile Include="StrategyRow.cs" />
     <Compile Include="SudokuBlock.cs" />
     <Compile Include="SudokuBoard.cs" />

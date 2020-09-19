@@ -16,6 +16,7 @@ namespace Sudoku
             for (int i = 0; i < 9; i++)
             {
                 cells[i] = parentBoard.Blocks[i / 3,positionColumn.x / 3].cells[i % 3, positionColumn.x % 3];
+                cells[i].parentColumn = this;
             }
         }
 

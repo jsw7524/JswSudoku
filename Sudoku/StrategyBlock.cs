@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace Sudoku
 {
-    public class StrategyRow : IStrategy
+    public class StrategyBlock : IStrategy
     {
         public PossibleValuesInCell Evaluate(SudokuBoard board, PossibleValuesInCell pvc)
         {
-            foreach (var rc in pvc.cell.parentRow.cells)
+            foreach (var cc in pvc.cell.parentBlock.cells)
             {
-                if (0 != rc.Value)
+                if (0 != cc.Value)
                 {
-                    pvc.possibleValues[rc.Value] = -1;
+                    pvc.possibleValues[cc.Value] = -1;
                 }
             }
             for (int i = 1; i < 10; i++)

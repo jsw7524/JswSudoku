@@ -7,8 +7,10 @@
         public int[,] data = null;
         public int absX;
         public int absY;
-        RowColumn cellColumnRow = null;
-        SudokuBlock parentBlock = null;
+        public RowColumn cellColumnRow = null;
+        public SudokuBlock parentBlock = null;
+        public SudokuRow parentRow = null;
+        public SudokuColumn parentColumn = null;
         public SudokuCell(int[,] d, SudokuBlock p, RowColumn blockRC, RowColumn cellRC)
         {
             parentBlock = p;
