@@ -148,5 +148,103 @@ namespace UnitTestProject1
             board.Rows[4].cells[4].Value = 0;
             Assert.AreEqual(0, board.Blocks[1, 1].cells[1, 1].Value);
         }
+
+        [TestMethod]
+        public void TestMethod18()
+        {
+            SudokuBoard board = new SudokuBoard(data);
+            Assert.AreEqual(true, board.Blocks[1, 1].ValidateNumbers());
+        }
+        [TestMethod]
+        public void TestMethod19()
+        {
+            SudokuBoard board = new SudokuBoard(data);
+            Assert.AreEqual(true, board.Rows[5].ValidateNumbers());
+        }
+
+        [TestMethod]
+        public void TestMethod20()
+        {
+            SudokuBoard board = new SudokuBoard(data);
+            Assert.AreEqual(true, board.Columns[5].ValidateNumbers());
+        }
+
+        [TestMethod]
+        public void TestMethod21()
+        {
+            string invalidJson = @"[
+[4, 3, 1, 2, 5, 7, 6, 9, 8], 
+[2, 5, 8, 6, 3, 9, 1, 7, 4], 
+[6, 7, 9, 1, 4, 8, 3, 5, 2], 
+[1, 2, 5, 4, 9, 6, 8, 3, 7], 
+[8, 4, 6, 3, 5, 5, 2, 1, 9], 
+[7, 9, 3, 8, 1, 2, 5, 4, 6], 
+[3, 1, 2, 7, 6, 4, 9, 8, 5], 
+[5, 6, 4, 9, 8, 3, 7, 2, 1], 
+[9, 8, 7, 5, 2, 1, 4, 6, 3]]";
+            int[,] invalid = JsonConvert.DeserializeObject<int[,]>(invalidJson);
+            SudokuBoard board = new SudokuBoard(invalid);
+            Assert.AreEqual(false, board.Blocks[1, 1].ValidateNumbers());
+        }
+        [TestMethod]
+        public void TestMethod22()
+        {
+            string invalidJson = @"[
+[4, 3, 1, 2, 5, 7, 6, 9, 8], 
+[2, 5, 8, 6, 3, 9, 1, 7, 4], 
+[6, 7, 9, 1, 4, 8, 3, 5, 2], 
+[1, 2, 5, 4, 9, 6, 8, 3, 7], 
+[8, 4, 6, 3, 5, 5, 2, 1, 9], 
+[7, 9, 3, 8, 1, 2, 5, 4, 6], 
+[3, 1, 2, 7, 6, 4, 9, 8, 5], 
+[5, 6, 4, 9, 8, 3, 7, 2, 1], 
+[9, 8, 7, 5, 2, 1, 4, 6, 3]]";
+            int[,] invalid = JsonConvert.DeserializeObject<int[,]>(invalidJson);
+            SudokuBoard board = new SudokuBoard(invalid);
+            Assert.AreEqual(false, board.Rows[4].ValidateNumbers());
+        }
+
+        [TestMethod]
+        public void TestMethod23()
+        {
+            string invalidJson = @"[
+[4, 3, 1, 2, 5, 7, 6, 9, 8], 
+[2, 5, 8, 6, 3, 9, 1, 7, 4], 
+[6, 7, 9, 1, 4, 8, 3, 5, 2], 
+[1, 2, 5, 4, 9, 6, 8, 3, 7], 
+[8, 4, 6, 3, 5, 5, 2, 1, 9], 
+[7, 9, 3, 8, 1, 2, 5, 4, 6], 
+[3, 1, 2, 7, 6, 4, 9, 8, 5], 
+[5, 6, 4, 9, 8, 3, 7, 2, 1], 
+[9, 8, 7, 5, 2, 1, 4, 6, 3]]";
+            int[,] invalid = JsonConvert.DeserializeObject<int[,]>(invalidJson);
+            SudokuBoard board = new SudokuBoard(invalid);
+            Assert.AreEqual(false, board.Columns[4].ValidateNumbers());
+        }
+
+        [TestMethod]
+        public void TestMethod24()
+        {
+            string invalidJson = @"[
+[4, 3, 1, 2, 5, 7, 6, 9, 8], 
+[2, 5, 8, 6, 3, 9, 1, 7, 4], 
+[6, 7, 9, 1, 4, 8, 3, 5, 2], 
+[1, 2, 5, 4, 9, 6, 8, 3, 7], 
+[8, 4, 6, 3, 5, 5, 2, 1, 9], 
+[7, 9, 3, 8, 1, 2, 5, 4, 6], 
+[3, 1, 2, 7, 6, 4, 9, 8, 5], 
+[5, 6, 4, 9, 8, 3, 7, 2, 1], 
+[9, 8, 7, 5, 2, 1, 4, 6, 3]]";
+            int[,] invalid = JsonConvert.DeserializeObject<int[,]>(invalidJson);
+            SudokuBoard board = new SudokuBoard(invalid);
+            Assert.AreEqual(false, board.ValidateNumbers());
+        }
+
+        [TestMethod]
+        public void TestMethod25()
+        {
+            SudokuBoard board = new SudokuBoard(data);
+            Assert.AreEqual(true, board.ValidateNumbers());
+        }
     }
 }
