@@ -43,8 +43,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="helper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RowColumn.cs" />
+    <Compile Include="SudokuBlock.cs" />
+    <Compile Include="SudokuBoard.cs" />
+    <Compile Include="SudokuCell.cs" />
+    <Compile Include="SudokuColumn.cs" />
+    <Compile Include="SudokuRow.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
