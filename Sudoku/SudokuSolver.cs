@@ -47,6 +47,10 @@ namespace Sudoku
             this.AddStrategy(stgclm);
             this.AddStrategy(stgRow);
             this.AddStrategy(stgBlk);
+            StrategyOtherRows stgOrs = new StrategyOtherRows();
+            this.AddStrategy(stgOrs);
+            StrategyOtherColumns stgOcs = new StrategyOtherColumns();
+            this.AddStrategy(stgOcs);
         }
 
         public PossibleValuesInCell EvaluatePossibleValuesInCell(SudokuBoard board, SudokuCell c)
@@ -90,7 +94,6 @@ namespace Sudoku
         int depth = 0;
         public Boolean BestFirstSearch(SudokuBoard board)
         {
-
             var emptyCells = GetEmptyCells(board);
             if (0 == emptyCells.Count())
             {
