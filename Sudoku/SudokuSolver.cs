@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,7 +13,6 @@ namespace Sudoku
         public int value;
         public double probability;
     }
-
 
     public class SudokuSolver
     {
@@ -87,6 +87,48 @@ namespace Sudoku
             var emptyCells = GetEmptyCells(board);
             return board;
         }
+        int depth = 0;
+        public Boolean BestFirstSearch(SudokuBoard board)
+        {
 
+            var emptyCells = GetEmptyCells(board);
+            if (0 == emptyCells.Count())
+            {
+                if (board.ValidateNumbers())
+                {
+                    return true;
+                }
+                return false;
+            }
+
+            var ordered = MakeCellValueWithProbability(board, emptyCells).OrderByDescending(c => c.probability);
+            if (0 == ordered.Count())
+            {
+                return false;
+            }
+            if (emptyCells.Count() > ordered.Count())
+            {
+                return false;
+            }
+            if (0 == ordered.Last().probability)
+            {
+                return false;
+            }
+
+            foreach (var cv in ordered)
+            {
+                Debug.WriteLine("depth:" + depth + "value:" + cv.value + "YX:" + cv.cell.absY + " " + cv.cell.absX);
+
+                cv.cell.Value = cv.value;
+                depth += 1;
+                if (BestFirstSearch(board))
+                {
+                    return true;
+                }
+                depth -= 1;
+                cv.cell.Value = 0;
+            }
+            return false;
+        }
     }
 }

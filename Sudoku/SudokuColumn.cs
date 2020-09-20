@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace Sudoku
 {
@@ -18,6 +19,10 @@ namespace Sudoku
                 cells[i] = parentBoard.Blocks[i / 3,positionColumn.x / 3].cells[i % 3, positionColumn.x % 3];
                 cells[i].parentColumn = this;
             }
+        }
+        public bool ContainNumber(int n)
+        {
+            return cells.Any(c => c.Value == n);
         }
 
         public bool ValidateNumbers()

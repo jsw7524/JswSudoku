@@ -58,5 +58,17 @@
             }
             return true;
         }
+
+        public bool ContainNumber(int n)
+        {
+            foreach (IValidatable r in Rows)
+            {
+                if (r.ContainNumber(n))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }

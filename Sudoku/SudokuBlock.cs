@@ -22,6 +22,21 @@ namespace Sudoku
             }
         }
 
+        public bool ContainNumber(int n)
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    if (cells[i, j].Value == n)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
         public bool ValidateNumbers()
         {
             Boolean[] numbers = new Boolean[10];

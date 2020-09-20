@@ -52,6 +52,7 @@
     <Compile Include="RowColumn.cs" />
     <Compile Include="StrategyBlock.cs" />
     <Compile Include="StrategyColumn.cs" />
+    <Compile Include="StrategyOtherRows.cs" />
     <Compile Include="StrategyRow.cs" />
     <Compile Include="SudokuBlock.cs" />
     <Compile Include="SudokuBoard.cs" />

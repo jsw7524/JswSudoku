@@ -243,9 +243,9 @@ namespace UnitTestProject1
 [5, 6, 4, 9, 8, 3, 7, 2, 1], 
 [9, 8, 7, 5, 2, 1, 4, 6, 0]]";
 
-        int[,] data = null;
 
-        string data2Json = @"[
+
+        string dataSlowJson = @"[
 [0,0,4,9,0,7,0,0,0],
 [0,2,0,3,0,0,0,8,9],
 [7,0,0,1,0,0,0,0,6],
@@ -256,6 +256,30 @@ namespace UnitTestProject1
 [0,6,0,7,0,4,0,0,0],
 [9,7,2,0,3,0,5,6,0]]";
 
+        //        string data2Json = @"[
+        //[0, 3, 1, 0, 5, 0, 6, 0, 0], 
+        //[0, 5, 0, 0, 3, 0, 1, 7, 4], 
+        //[6, 0, 0, 1, 0, 0, 3, 0, 2], 
+        //[1, 0, 5, 0, 0, 0, 0, 0, 7], 
+        //[8, 0, "6", 0, 0, 0, 0, 0, 9], 
+        //[0, 9, 0, 8, 0, 0, 5, 0, 0], 
+        //[3, 1, 0, 0, 6, 0, 0, 8, 0], 
+        //[0, 0, 0, 0, 0, 0, 0, 0, 0], 
+        //[0, 8, 0, 0, 2, 0, 4, 0, 0]]";
+
+        string data2Json = @"[
+[0, 3, 1, 0, 5, 0, 6, 0, 0], 
+[0, 5, 0, 0, 3, 0, 1, 7, 4], 
+[6, 0, 0, 1, 0, 0, 3, 0, 2], 
+[1, 0, 5, 0, 0, 0, 0, 0, 7], 
+[8, 0, 0, 0, 0, 0, 0, 0, 9], 
+[0, 9, 0, 8, 0, 0, 5, 0, 0], 
+[3, 1, 0, 0, 6, 0, 0, 8, 0], 
+[0, 0, 0, 0, 0, 0, 0, 0, 0], 
+[0, 8, 0, 0, 2, 0, 4, 0, 0]]";
+
+
+        int[,] data = null;
         int[,] data2 = null;
 
 
@@ -378,6 +402,25 @@ namespace UnitTestProject1
             Assert.AreEqual(result1.First().value, result3.First().value);
         }
 
+        //[TestMethod]
+        //public void TestMethod10()
+        //{
+        //    SudokuBoard board = new SudokuBoard(data2);
+        //    SudokuSolver solver = new SudokuSolver();
+        //    var result=solver.BestFirstSearch(board);
+        //    Assert.AreEqual(true, result);
+        //}
+        [TestMethod]
+        public void TestMethod11()
+        {
+            SudokuBoard board = new SudokuBoard(data);
+            SudokuSolver solver = new SudokuSolver();
+            StrategyOtherRows stgOrs = new StrategyOtherRows();
+            var result = solver.GetEmptyCells(board);
+            var pvc = new PossibleValuesInCell(result.Where(c => c.absX == 8 && c.absY == 8).FirstOrDefault());
+            stgOrs.Evaluate(board, pvc);
+            Assert.AreEqual(1, pvc.possibleValues[3]);
+        }
     }
 
 }
