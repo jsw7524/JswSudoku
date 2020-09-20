@@ -55,6 +55,8 @@
     <Compile Include="RowColumn.cs" />
     <Compile Include="StrategyBlock.cs" />
     <Compile Include="StrategyColumn.cs" />
+    <Compile Include="StrategyOnlySquareRule.cs" />
+    <Compile Include="StrategyOnlySquareRuleColumn.cs" />
     <Compile Include="StrategyOtherColumns.cs" />
     <Compile Include="StrategyOtherRows.cs" />
     <Compile Include="StrategyRow.cs" />

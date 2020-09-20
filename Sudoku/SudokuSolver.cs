@@ -51,6 +51,9 @@ namespace Sudoku
             this.AddStrategy(stgOrs);
             StrategyOtherColumns stgOcs = new StrategyOtherColumns();
             this.AddStrategy(stgOcs);
+
+            this.AddStrategy(new StrategyOnlySquareRuleRow());
+            this.AddStrategy(new StrategyOnlySquareRuleColumn());
         }
 
         public PossibleValuesInCell EvaluatePossibleValuesInCell(SudokuBoard board, SudokuCell c)
