@@ -1,10 +1,12 @@
-﻿namespace Sudoku
+﻿using System.Collections.Generic;
+
+namespace Sudoku
 {
-    public class SudokuBoard : IValidatable
+    public class SudokuBoard : IValidatable, ILocatable
     {
         public int[,] data = new int[9, 9];
         public SudokuBlock[,] Blocks = new SudokuBlock[3, 3];
-        public SudokuRow[] Rows= new SudokuRow[9];
+        public SudokuRow[] Rows = new SudokuRow[9];
         public SudokuColumn[] Columns = new SudokuColumn[9];
 
         public int this[int y, int x]
@@ -34,7 +36,7 @@
         }
 
         public bool ValidateNumbers()
-        { 
+        {
             foreach (IValidatable b in Blocks)
             {
                 if (false == b.ValidateNumbers())
@@ -61,7 +63,7 @@
 
         public bool ContainNumber(int n)
         {
-            foreach (IValidatable r in Rows)
+            foreach (ILocatable r in Rows)
             {
                 if (r.ContainNumber(n))
                 {
@@ -69,6 +71,18 @@
                 }
             }
             return false;
+        }
+
+        public IEnumerable<SudokuCell> GetRow(int y)
+        {
+            List<SudokuCell> tmp = new List<SudokuCell>(Rows[y].cells);
+            return tmp;
+        }
+
+        public IEnumerable<SudokuCell> GetColumn(int x)
+        {
+            List<SudokuCell> tmp = new List<SudokuCell>(Columns[x].cells);
+            return tmp;
         }
     }
 }

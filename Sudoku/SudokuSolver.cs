@@ -41,17 +41,11 @@ namespace Sudoku
 
         public SudokuSolver()
         {
-            StrategyColumn stgclm = new StrategyColumn();
-            StrategyRow stgRow = new StrategyRow();
-            StrategyBlock stgBlk = new StrategyBlock();
-            this.AddStrategy(stgclm);
-            this.AddStrategy(stgRow);
-            this.AddStrategy(stgBlk);
-            StrategyOtherRows stgOrs = new StrategyOtherRows();
-            this.AddStrategy(stgOrs);
-            StrategyOtherColumns stgOcs = new StrategyOtherColumns();
-            this.AddStrategy(stgOcs);
-
+            this.AddStrategy(new StrategyColumn());
+            this.AddStrategy(new StrategyRow());
+            this.AddStrategy(new StrategyBlock());
+            this.AddStrategy(new StrategyOtherRows());
+            this.AddStrategy(new StrategyOtherColumns());
             this.AddStrategy(new StrategyOnlySquareRuleRow());
             this.AddStrategy(new StrategyOnlySquareRuleColumn());
         }

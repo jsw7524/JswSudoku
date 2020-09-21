@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Sudoku
 {
-    public class SudokuBlock : IValidatable
+    public class SudokuBlock : IValidatable, ILocatable
     {
         public SudokuCell[,] cells = new SudokuCell[3, 3];
         public int[,] data = null;
@@ -35,6 +36,18 @@ namespace Sudoku
                 }
             }
             return false;
+        }
+
+        public IEnumerable<SudokuCell> GetColumn(int x)
+        {
+            List<SudokuCell> tmp = new List<SudokuCell> { cells[0, x], cells[1, x], cells[2, x] };
+            return tmp;
+        }
+
+        public IEnumerable<SudokuCell> GetRow(int y)
+        {
+            List<SudokuCell> tmp = new List<SudokuCell> { cells[y,0], cells[y, 1], cells[y, 2] };
+            return tmp;
         }
 
         public bool ValidateNumbers()

@@ -16,9 +16,8 @@
             parentBlock = p;
             data = d;
             this.cellColumnRow = cellRC;
-            var tmp = helper.absCell(blockRC, cellRC);
-            absX = tmp.x;
-            absY = tmp.y;
+            absX = 3 * blockRC.x + cellRC.x;
+            absY = 3 * blockRC.y + cellRC.y;
             Value = data[absY, absX];
         }
     }

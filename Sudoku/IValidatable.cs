@@ -9,6 +9,5 @@ namespace Sudoku
     interface IValidatable
     {
         Boolean ValidateNumbers();
-        Boolean ContainNumber(int n);
     }
 }

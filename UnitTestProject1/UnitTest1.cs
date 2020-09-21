@@ -347,14 +347,14 @@ namespace UnitTestProject1
             Assert.AreEqual(1, pvc.possibleValues[3]);
         }
 
-        [TestMethod]
-        public void TestMethod6()
-        {
-            SudokuBoard board = new SudokuBoard(data);
-            SudokuSolver solver = new SudokuSolver();
-            var pvc = solver.EvaluatePossibleValuesInCell(board, solver.GetEmptyCells(board).Where(c => c.absX == 4 && c.absY == 4).FirstOrDefault());
-            Assert.AreEqual(5, pvc.possibleValues[7]);
-        }
+        //[TestMethod]
+        //public void TestMethod6()
+        //{
+        //    SudokuBoard board = new SudokuBoard(data);
+        //    SudokuSolver solver = new SudokuSolver();
+        //    var pvc = solver.EvaluatePossibleValuesInCell(board, solver.GetEmptyCells(board).Where(c => c.absX == 4 && c.absY == 4).FirstOrDefault());
+        //    Assert.AreEqual(5, pvc.possibleValues[7]);
+        //}
 
 
         [TestMethod]
@@ -413,7 +413,19 @@ namespace UnitTestProject1
         [TestMethod]
         public void TestMethod11()
         {
-            SudokuBoard board = new SudokuBoard(data);
+            string testJson = @"[
+[0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0],
+[0,0,0,0,3,0,0,0,0],
+[0,3,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0]
+]";
+            int[,] test = JsonConvert.DeserializeObject<int[,]>(testJson);
+            SudokuBoard board = new SudokuBoard(test);
             SudokuSolver solver = new SudokuSolver();
             StrategyOtherRows stgOrs = new StrategyOtherRows();
             var result = solver.GetEmptyCells(board);
@@ -421,11 +433,46 @@ namespace UnitTestProject1
             stgOrs.Evaluate(board, pvc);
             Assert.AreEqual(1, pvc.possibleValues[3]);
         }
+        [TestMethod]
+        public void TestMethod11a()
+        {
+            string testJson = @"[
+[0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0],
+[0,0,0,0,3,0,0,0,0],
+[0,3,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,1,2,0]
+]";
+            int[,] test = JsonConvert.DeserializeObject<int[,]>(testJson);
+            SudokuBoard board = new SudokuBoard(test);
+            SudokuSolver solver = new SudokuSolver();
+            StrategyOtherRows stgOrs = new StrategyOtherRows();
+            var result = solver.GetEmptyCells(board);
+            var pvc = new PossibleValuesInCell(result.Where(c => c.absX == 8 && c.absY == 8).FirstOrDefault());
+            stgOrs.Evaluate(board, pvc);
+            Assert.AreEqual(2, pvc.possibleValues[3]);
+        }
 
         [TestMethod]
         public void TestMethod12()
         {
-            SudokuBoard board = new SudokuBoard(data);
+            string testJson = @"[
+[0,0,0,0,0,0,3,0,0],
+[0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,3,0],
+[0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0]
+]";
+            int[,] test = JsonConvert.DeserializeObject<int[,]>(testJson);
+            SudokuBoard board = new SudokuBoard(test);
             SudokuSolver solver = new SudokuSolver();
             StrategyOtherColumns stgOcs = new StrategyOtherColumns();
             var result = solver.GetEmptyCells(board);
@@ -434,7 +481,32 @@ namespace UnitTestProject1
             Assert.AreEqual(1, pvc.possibleValues[3]);
         }
 
+    [TestMethod]
+    public void TestMethod12a()
+    {
+        string testJson = @"[
+[0,0,0,0,0,0,3,0,0],
+[0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,3,0],
+[0,0,0,0,0,0,0,0,2],
+[0,0,0,0,0,0,0,0,1],
+[0,0,0,0,0,0,0,0,0]
+]";
+        int[,] test = JsonConvert.DeserializeObject<int[,]>(testJson);
+        SudokuBoard board = new SudokuBoard(test);
+        SudokuSolver solver = new SudokuSolver();
+        StrategyOtherColumns stgOcs = new StrategyOtherColumns();
+        var result = solver.GetEmptyCells(board);
+        var pvc = new PossibleValuesInCell(result.Where(c => c.absX == 8 && c.absY == 8).FirstOrDefault());
+        stgOcs.Evaluate(board, pvc);
+        Assert.AreEqual(2, pvc.possibleValues[3]);
     }
+
+    }
+
     [TestClass]
     public class UnitTestSudokuQuestions
     {
@@ -546,6 +618,52 @@ namespace UnitTestProject1
         //    var result = solver.BestFirstSearch(board);
         //    Assert.AreEqual(true, result);
         //}
+
+        [TestMethod]
+        public void TestMethod10()
+        {
+            string dataJson = @"[[0,0,0,0,2,9,0,0,0],[0,2,0,0,0,6,7,0,0],[0,7,0,0,0,0,0,0,0],[2,0,0,0,0,0,8,0,0],[0,0,0,8,9,0,1,0,0],[0,9,7,0,0,0,0,0,0],[0,0,0,0,7,0,9,0,8],[0,8,0,0,3,0,0,1,6],[0,6,4,0,8,0,3,0,2]]";
+            int[,] data = JsonConvert.DeserializeObject<int[,]>(dataJson);
+            SudokuBoard board = new SudokuBoard(data);
+            SudokuSolver solver = new SudokuSolver();
+            var result = solver.BestFirstSearch(board);
+            Assert.AreEqual(true, result);
+        }
+
+
+        [TestMethod]
+        public void TestMethod12()
+        {
+            string dataJson = @"[[0,0,4,0,0,0,0,0,0],[0,0,0,3,0,0,4,0,9],[6,0,0,0,4,0,2,0,5],[0,0,3,0,5,0,7,9,0],[0,5,0,7,0,0,0,2,3],[0,9,0,0,0,0,0,0,6],[0,4,0,8,0,0,9,6,7],[0,0,7,9,0,0,0,1,0],[0,8,0,0,7,0,3,0,4]]";
+            int[,] data = JsonConvert.DeserializeObject<int[,]>(dataJson);
+            SudokuBoard board = new SudokuBoard(data);
+            SudokuSolver solver = new SudokuSolver();
+            var result = solver.BestFirstSearch(board);
+            Assert.AreEqual(true, result);
+        }
+
+        [TestMethod]
+        public void TestMethod13()
+        {
+            string dataJson = @"[[0,0,0,0,7,1,8,0,0],[0,0,0,0,6,0,0,0,0],[0,0,0,0,0,0,1,2,0],[2,1,0,0,0,0,0,0,0],[0,6,0,0,9,0,0,0,0],[0,9,7,0,0,0,4,0,6],[0,0,0,0,8,2,0,4,0],[7,0,6,9,1,5,3,0,0],[9,8,2,7,3,4,6,1,0]]";
+            int[,] data = JsonConvert.DeserializeObject<int[,]>(dataJson);
+            SudokuBoard board = new SudokuBoard(data);
+            SudokuSolver solver = new SudokuSolver();
+            var result = solver.BestFirstSearch(board);
+            Assert.AreEqual(true, result);
+        }
+
+        [TestMethod]
+        public void TestMethod14()
+        {
+            string dataJson = @"[[0,0,0,0,0,0,4,0,0],[0,0,0,0,5,0,0,0,9],[0,7,0,3,0,0,0,0,0],[1,0,0,0,0,0,0,9,7],[4,5,7,2,9,0,3,6,0],[0,8,0,0,0,3,0,5,4],[3,0,5,6,0,1,0,0,8],[7,0,0,0,8,0,5,0,3],[0,0,1,5,3,7,6,0,2]]";
+            int[,] data = JsonConvert.DeserializeObject<int[,]>(dataJson);
+            SudokuBoard board = new SudokuBoard(data);
+            SudokuSolver solver = new SudokuSolver();
+            var result = solver.BestFirstSearch(board);
+            Assert.AreEqual(true, result);
+        }
+
 
     }
 }

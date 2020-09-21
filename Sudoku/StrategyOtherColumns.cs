@@ -26,6 +26,10 @@ namespace Sudoku
                 if (times == 2)
                 {
                     pvc.possibleValues[n] += 1;
+                    if (pvc.cell.parentBlock.GetColumn(pvc.cell.cellColumnRow.x).Where(c => c.Value > 0).Count() >= 2)
+                    {
+                        pvc.possibleValues[n] += 1;
+                    }
                 }
             }
             return pvc;

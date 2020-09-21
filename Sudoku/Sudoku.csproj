@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="helper.cs" />
+    <Compile Include="ILocatable.cs" />
     <Compile Include="IStrategy.cs" />
     <Compile Include="IValidatable.cs" />
     <Compile Include="PossibleValuesInCell.cs" />

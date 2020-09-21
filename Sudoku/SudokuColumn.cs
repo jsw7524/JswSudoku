@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Sudoku
 {
-    public class SudokuColumn : IValidatable
+    public class SudokuColumn : IValidatable, ILocatable
     {
         public SudokuCell[] cells = new SudokuCell[9];
         public int[,] data = null;
@@ -23,6 +24,18 @@ namespace Sudoku
         public bool ContainNumber(int n)
         {
             return cells.Any(c => c.Value == n);
+        }
+
+        public IEnumerable<SudokuCell> GetColumn(int x)
+        {
+            List<SudokuCell> tmp = new List<SudokuCell>(cells);
+            return tmp;
+        }
+
+        public IEnumerable<SudokuCell> GetRow(int y)
+        {
+            List<SudokuCell> tmp = new List<SudokuCell> { cells[y] };
+            return tmp;
         }
 
         public bool ValidateNumbers()
