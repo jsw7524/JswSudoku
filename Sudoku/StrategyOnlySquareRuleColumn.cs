@@ -1,31 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 
 namespace Sudoku
 {
     class StrategyOnlySquareRuleColumn : IStrategy
     {
-        public PossibleValuesInCell Evaluate(SudokuBoard board, PossibleValuesInCell pvc)
+        public SudokuCell Evaluate(SudokuBoard board, SudokuCell cell)
         {
-            var emptyCellsInColumn = pvc.cell.parentColumn.cells.Where(c => 0 == c.Value && !c.Equals(pvc.cell));
+            var emptyCellsInColumn = cell.parentColumn.cells.Where(c => 0 == c.Value && !c.Equals(cell));
             if (emptyCellsInColumn.Count() == 0)
             {
-                return pvc;
+                return cell;
             }
             for (int i = 1; i < 10; i++)
             {
-                if (pvc.possibleValues[i] >= 0)
+                if (cell.possibleValues[i] >= 0)
                 {
                     if (emptyCellsInColumn.All(c => c.parentRow.ContainNumber(i)))
                     {
-                        pvc.possibleValues[i]++;
+                        cell.possibleValues[i]++;
                     }
                 }
             }
-            return pvc;
+            return cell;
         }
     }
 }

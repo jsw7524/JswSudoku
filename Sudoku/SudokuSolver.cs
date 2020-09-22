@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Sudoku
 {
@@ -50,32 +47,38 @@ namespace Sudoku
             this.AddStrategy(new StrategyOnlySquareRuleColumn());
         }
 
-        public PossibleValuesInCell EvaluatePossibleValuesInCell(SudokuBoard board, SudokuCell c)
+        public SudokuCell EvaluatePossibleValuesInCell(SudokuBoard board, SudokuCell c)
         {
-            var pvc = new PossibleValuesInCell(c);
             foreach (var stg in Strategies)
             {
-                stg.Evaluate(board, pvc);
+                stg.Evaluate(board, c);
             }
-            return pvc;
+            return c;
         }
 
         public IEnumerable<ValueWithProbability> MakeCellValueWithProbability(SudokuBoard board, IEnumerable<SudokuCell> emptyCells)
         {
-            List<PossibleValuesInCell> possibleValuesInCell = new List<PossibleValuesInCell>();
             foreach (var c in emptyCells)
             {
-                possibleValuesInCell.Add(EvaluatePossibleValuesInCell(board, c));
+                for (int i = 0; i < 10; i++)
+                {
+                    c.possibleValues[i] = 0;
+                }
+            }
+            List<SudokuCell> evaluatedCells = new List<SudokuCell>();
+            foreach (var c in emptyCells)
+            {
+                evaluatedCells.Add(EvaluatePossibleValuesInCell(board, c));
             }
             List<ValueWithProbability> result = new List<ValueWithProbability>();
-            foreach (var pvc in possibleValuesInCell)
+            foreach (var c in evaluatedCells)
             {
-                double sum = pvc.possibleValues.Where(c => c > 0).Sum();
+                double sum = c.possibleValues.Where(v => v > 0).Sum();
                 for (int i = 1; i < 10; i++)
                 {
-                    if (pvc.possibleValues[i] > 0)
+                    if (c.possibleValues[i] > 0)
                     {
-                        var vp = new ValueWithProbability() { cell = pvc.cell, value = i, probability = pvc.possibleValues[i] / sum };
+                        var vp = new ValueWithProbability() { cell = c, value = i, probability = c.possibleValues[i] / sum };
                         result.Add(vp);
                     }
                 }
@@ -85,10 +88,10 @@ namespace Sudoku
 
         public SudokuBoard Solve(SudokuBoard board)
         {
-            var emptyCells = GetEmptyCells(board);
-            return board;
+            if (BestFirstSearch(board))
+                return board;
+            return null;
         }
-        int depth = 0;
         public Boolean BestFirstSearch(SudokuBoard board)
         {
             var emptyCells = GetEmptyCells(board);
@@ -100,32 +103,15 @@ namespace Sudoku
                 }
                 return false;
             }
-
             var ordered = MakeCellValueWithProbability(board, emptyCells).OrderByDescending(c => c.probability);
-            if (0 == ordered.Count())
-            {
-                return false;
-            }
-            if (emptyCells.Count() > ordered.Count())
-            {
-                return false;
-            }
-            if (0 == ordered.Last().probability)
-            {
-                return false;
-            }
-
             foreach (var cv in ordered)
             {
-                Debug.WriteLine("depth:" + depth + "value:" + cv.value + "YX:" + cv.cell.absY + " " + cv.cell.absX);
-
+                //Debug.WriteLine("depth:" + depth + "value:" + cv.value + "YX:" + cv.cell.absY + " " + cv.cell.absX);
                 cv.cell.Value = cv.value;
-                depth += 1;
                 if (BestFirstSearch(board))
                 {
                     return true;
                 }
-                depth -= 1;
                 cv.cell.Value = 0;
             }
             return false;

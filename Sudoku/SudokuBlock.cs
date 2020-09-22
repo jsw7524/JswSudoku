@@ -46,7 +46,7 @@ namespace Sudoku
 
         public IEnumerable<SudokuCell> GetRow(int y)
         {
-            List<SudokuCell> tmp = new List<SudokuCell> { cells[y,0], cells[y, 1], cells[y, 2] };
+            List<SudokuCell> tmp = new List<SudokuCell> { cells[y, 0], cells[y, 1], cells[y, 2] };
             return tmp;
         }
 
@@ -62,7 +62,7 @@ namespace Sudoku
             }
             for (int i = 1; i < 10; i++)
             {
-                if (false==numbers[i])
+                if (false == numbers[i])
                 {
                     return false;
                 }

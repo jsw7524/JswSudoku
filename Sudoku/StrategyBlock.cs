@@ -1,30 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Sudoku
+﻿namespace Sudoku
 {
     public class StrategyBlock : IStrategy
     {
-        public PossibleValuesInCell Evaluate(SudokuBoard board, PossibleValuesInCell pvc)
+        public SudokuCell Evaluate(SudokuBoard board, SudokuCell cell)
         {
-            foreach (var cc in pvc.cell.parentBlock.cells)
+            foreach (var cc in cell.parentBlock.cells)
             {
                 if (0 != cc.Value)
                 {
-                    pvc.possibleValues[cc.Value] = -1;
+                    cell.possibleValues[cc.Value] = -1;
                 }
             }
             for (int i = 1; i < 10; i++)
             {
-                if (pvc.possibleValues[i] >= 0)
+                if (cell.possibleValues[i] >= 0)
                 {
-                    pvc.possibleValues[i]++;
+                    cell.possibleValues[i]++;
                 }
             }
-            return pvc;
+            return cell;
         }
     }
 }

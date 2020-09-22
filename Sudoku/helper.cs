@@ -18,8 +18,8 @@ namespace Sudoku
                 }
                 data.Add(tmp);
             }
-            var json=JsonConvert.SerializeObject(data);
-            File.WriteAllText(filename,json);
+            var json = JsonConvert.SerializeObject(data);
+            File.WriteAllText(filename, json);
         }
     }
 }

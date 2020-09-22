@@ -2,7 +2,7 @@
 {
     public class SudokuCell
     {
-        //int[] numbers = new int[10] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+        public int[] possibleValues = new int[10] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }; //negative values mean impossible.
         public int Value = 0;
         public int[,] data = null;
         public int absX;

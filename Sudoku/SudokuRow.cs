@@ -44,7 +44,7 @@ namespace Sudoku
             Boolean[] numbers = new Boolean[10];
             for (int i = 0; i < 9; i++)
             {
-                    numbers[cells[i].Value] = true;
+                numbers[cells[i].Value] = true;
             }
             for (int i = 1; i < 10; i++)
             {

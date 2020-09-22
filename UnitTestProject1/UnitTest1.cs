@@ -1,9 +1,7 @@
-﻿using System;
-using System.Linq;
-using System.Threading;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using Sudoku;
+using System.Linq;
 
 namespace UnitTestProject1
 {
@@ -305,7 +303,7 @@ namespace UnitTestProject1
             SudokuSolver solver = new SudokuSolver();
             StrategyRow stgRow = new StrategyRow();
             var result = solver.GetEmptyCells(board);
-            var pvc = new PossibleValuesInCell(result.Where(c => c.absX == 0 && c.absY == 0).FirstOrDefault());
+            var pvc = result.Where(c => c.absX == 0 && c.absY == 0).FirstOrDefault();
             stgRow.Evaluate(board, pvc);
             Assert.AreEqual(1, pvc.possibleValues[4]);
         }
@@ -317,7 +315,7 @@ namespace UnitTestProject1
             SudokuSolver solver = new SudokuSolver();
             StrategyColumn stgclm = new StrategyColumn();
             var result = solver.GetEmptyCells(board);
-            var pvc = new PossibleValuesInCell(result.Where(c => c.absX == 8 && c.absY == 8).FirstOrDefault());
+            var pvc = result.Where(c => c.absX == 8 && c.absY == 8).FirstOrDefault();
             stgclm.Evaluate(board, pvc);
             Assert.AreEqual(1, pvc.possibleValues[3]);
         }
@@ -330,7 +328,7 @@ namespace UnitTestProject1
             SudokuSolver solver = new SudokuSolver();
             StrategyRow stgRow = new StrategyRow();
             var result = solver.GetEmptyCells(board);
-            var pvc = new PossibleValuesInCell(result.Where(c => c.absX == 8 && c.absY == 8).FirstOrDefault());
+            var pvc = result.Where(c => c.absX == 8 && c.absY == 8).FirstOrDefault();
             stgRow.Evaluate(board, pvc);
             Assert.AreEqual(1, pvc.possibleValues[3]);
         }
@@ -342,7 +340,7 @@ namespace UnitTestProject1
             SudokuSolver solver = new SudokuSolver();
             StrategyBlock stgBlk = new StrategyBlock();
             var result = solver.GetEmptyCells(board);
-            var pvc = new PossibleValuesInCell(result.Where(c => c.absX == 8 && c.absY == 8).FirstOrDefault());
+            var pvc = result.Where(c => c.absX == 8 && c.absY == 8).FirstOrDefault();
             stgBlk.Evaluate(board, pvc);
             Assert.AreEqual(1, pvc.possibleValues[3]);
         }
@@ -429,7 +427,7 @@ namespace UnitTestProject1
             SudokuSolver solver = new SudokuSolver();
             StrategyOtherRows stgOrs = new StrategyOtherRows();
             var result = solver.GetEmptyCells(board);
-            var pvc = new PossibleValuesInCell(result.Where(c => c.absX == 8 && c.absY == 8).FirstOrDefault());
+            var pvc = result.Where(c => c.absX == 8 && c.absY == 8).FirstOrDefault();
             stgOrs.Evaluate(board, pvc);
             Assert.AreEqual(1, pvc.possibleValues[3]);
         }
@@ -452,7 +450,7 @@ namespace UnitTestProject1
             SudokuSolver solver = new SudokuSolver();
             StrategyOtherRows stgOrs = new StrategyOtherRows();
             var result = solver.GetEmptyCells(board);
-            var pvc = new PossibleValuesInCell(result.Where(c => c.absX == 8 && c.absY == 8).FirstOrDefault());
+            var pvc = result.Where(c => c.absX == 8 && c.absY == 8).FirstOrDefault();
             stgOrs.Evaluate(board, pvc);
             Assert.AreEqual(2, pvc.possibleValues[3]);
         }
@@ -476,15 +474,15 @@ namespace UnitTestProject1
             SudokuSolver solver = new SudokuSolver();
             StrategyOtherColumns stgOcs = new StrategyOtherColumns();
             var result = solver.GetEmptyCells(board);
-            var pvc = new PossibleValuesInCell(result.Where(c => c.absX == 8 && c.absY == 8).FirstOrDefault());
+            var pvc = result.Where(c => c.absX == 8 && c.absY == 8).FirstOrDefault();
             stgOcs.Evaluate(board, pvc);
             Assert.AreEqual(1, pvc.possibleValues[3]);
         }
 
-    [TestMethod]
-    public void TestMethod12a()
-    {
-        string testJson = @"[
+        [TestMethod]
+        public void TestMethod12a()
+        {
+            string testJson = @"[
 [0,0,0,0,0,0,3,0,0],
 [0,0,0,0,0,0,0,0,0],
 [0,0,0,0,0,0,0,0,0],
@@ -495,15 +493,15 @@ namespace UnitTestProject1
 [0,0,0,0,0,0,0,0,1],
 [0,0,0,0,0,0,0,0,0]
 ]";
-        int[,] test = JsonConvert.DeserializeObject<int[,]>(testJson);
-        SudokuBoard board = new SudokuBoard(test);
-        SudokuSolver solver = new SudokuSolver();
-        StrategyOtherColumns stgOcs = new StrategyOtherColumns();
-        var result = solver.GetEmptyCells(board);
-        var pvc = new PossibleValuesInCell(result.Where(c => c.absX == 8 && c.absY == 8).FirstOrDefault());
-        stgOcs.Evaluate(board, pvc);
-        Assert.AreEqual(2, pvc.possibleValues[3]);
-    }
+            int[,] test = JsonConvert.DeserializeObject<int[,]>(testJson);
+            SudokuBoard board = new SudokuBoard(test);
+            SudokuSolver solver = new SudokuSolver();
+            StrategyOtherColumns stgOcs = new StrategyOtherColumns();
+            var result = solver.GetEmptyCells(board);
+            var pvc = result.Where(c => c.absX == 8 && c.absY == 8).FirstOrDefault();
+            stgOcs.Evaluate(board, pvc);
+            Assert.AreEqual(2, pvc.possibleValues[3]);
+        }
 
     }
 
