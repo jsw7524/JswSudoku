@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sudoku", "Sudoku\Sudoku.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestProject1", "UnitTestProject1\UnitTestProject1.csproj", "{71566A70-9607-42BF-B1BB-736FC78DB5B8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SudokuUI", "SudokuUI\SudokuUI.csproj", "{BD921146-7147-4CFD-B0C1-5633E364D462}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{71566A70-9607-42BF-B1BB-736FC78DB5B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{71566A70-9607-42BF-B1BB-736FC78DB5B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{71566A70-9607-42BF-B1BB-736FC78DB5B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD921146-7147-4CFD-B0C1-5633E364D462}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD921146-7147-4CFD-B0C1-5633E364D462}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD921146-7147-4CFD-B0C1-5633E364D462}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD921146-7147-4CFD-B0C1-5633E364D462}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
