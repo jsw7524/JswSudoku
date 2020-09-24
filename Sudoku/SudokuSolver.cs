@@ -47,31 +47,30 @@ namespace Sudoku
             this.AddStrategy(new StrategyOnlySquareRuleColumn());
         }
 
-        public SudokuCell EvaluatePossibleValuesInCell(SudokuBoard board, SudokuCell c)
+        public void EvaluatePossibleValuesInCell(SudokuBoard board, IEnumerable<SudokuCell> cells)
         {
-            foreach (var stg in Strategies)
-            {
-                stg.Evaluate(board, c);
-            }
-            return c;
-        }
-
-        public IEnumerable<ValueWithProbability> MakeCellValueWithProbability(SudokuBoard board, IEnumerable<SudokuCell> emptyCells)
-        {
-            foreach (var c in emptyCells)
+            foreach (var c in cells)
             {
                 for (int i = 0; i < 10; i++)
                 {
                     c.possibleValues[i] = 0;
                 }
             }
-            List<SudokuCell> evaluatedCells = new List<SudokuCell>();
-            foreach (var c in emptyCells)
+            foreach (var stg in Strategies)
             {
-                evaluatedCells.Add(EvaluatePossibleValuesInCell(board, c));
+                foreach (var c in cells)
+                {
+                    stg.Evaluate(board, c);
+                }
             }
-            List<ValueWithProbability> result = new List<ValueWithProbability>();
-            foreach (var c in evaluatedCells)
+            return ;
+        }
+
+        public IEnumerable<ValueWithProbability> MakeCellValueWithProbability(SudokuBoard board, IEnumerable<SudokuCell> emptyCells)
+        {
+            EvaluatePossibleValuesInCell(board,emptyCells);
+            List <ValueWithProbability> result = new List<ValueWithProbability>();
+            foreach (var c in emptyCells)
             {
                 double sum = c.possibleValues.Where(v => v > 0).Sum();
                 for (int i = 1; i < 10; i++)

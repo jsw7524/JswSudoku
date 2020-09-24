@@ -16,15 +16,24 @@ namespace Sudoku
                 {
                     if (r == cell.parentRow.positionRow.y)
                         continue;
-                    if (board.Rows[r].ContainNumber(n))
+                    if (board.Rows[r].ContainNumber(n) && !cell.parentColumn.ContainNumber(n))
                         times += 1;
                 }
                 if (times == 2)
                 {
                     cell.possibleValues[n] += 1;
-                    if (cell.parentBlock.GetRow(cell.cellColumnRow.y).Where(c => c.Value > 0).Count() >= 2)
+                    int notEmpty = cell.parentBlock.GetRow(cell.cellColumnRow.y).Where(c => c.Value > 0).Count() ;
+                    if (notEmpty >= 2)
                     {
                         cell.possibleValues[n] += 1;
+                    }
+                    else if (notEmpty == 1)
+                    {
+                        var anotherEmpty = cell.parentBlock.GetRow(cell.cellColumnRow.y).Where(c => c.Value == 0 && c != cell).FirstOrDefault();
+                        if (anotherEmpty.parentColumn.ContainNumber(n))
+                        {
+                            cell.possibleValues[n] += 1;
+                        }
                     }
                 }
             }
