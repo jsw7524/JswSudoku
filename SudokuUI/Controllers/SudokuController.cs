@@ -41,7 +41,14 @@ namespace SudokuUI.Controllers
             {
                 for (int j = 0; j < 9; j++)
                 {
-                    result[i, j] = int.Parse((tmp[i])[j]);
+                    if (tmp[i][j] == "")
+                    {
+                        result[i, j] = 0;
+                    }
+                    else
+                    {
+                        result[i, j] = int.Parse(tmp[i][j]);
+                    }
                 }
             }
             return result;

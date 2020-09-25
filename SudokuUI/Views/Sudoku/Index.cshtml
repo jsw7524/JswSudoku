@@ -9,7 +9,7 @@
 
 @Html.ActionLink("new game","index")
 
-<table class="table table-bordered">
+<table id="SudokuBoard" class="table table-bordered">
     @for (int i = 0; i < 9; i++)
     {
         <tr>
@@ -28,11 +28,22 @@
     <script>
         var gameData = null;
         var gameDataBackup = null;
+        var table = [];
         function sovle() {
+            for (i = 0; i < 9; i++) {
+                row = []
+                for (j = 0; j < 9; j++) {
+                    row.push($('#c' + i + j).text())
+
+                }
+                table.push(row)
+            }
+
+
             $.ajax({
                 type: "POST",
                 url: '@Url.Action("sovleSudoku", "Sudoku")',
-                data: { dataJson: gameData.board },
+                data: { dataJson: table },
                 success: function (data) {
                     gameData = JSON.parse(data)
                     for (i = 0; i < 9; i++) {
@@ -54,6 +65,7 @@
 
 
         $(function () {
+            var cell = null;
             $.ajax({
                 url: '@Url.Action("GetSudokuBoardData", "Sudoku")',
                 success: function (data) {
@@ -68,6 +80,18 @@
                     }
                 }
             });
+
+            $(document).keypress(function (n) {
+                $(cell).text(n.key)
+                console.log(n.key);
+            });
+
+            $("#SudokuBoard").on("click", "td", function () {
+                cell = this
+                
+                //alert($(this).text());
+            });
+
         });
     </script>
 

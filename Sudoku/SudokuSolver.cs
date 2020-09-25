@@ -63,6 +63,7 @@ namespace Sudoku
                     stg.Evaluate(board, c);
                 }
             }
+
             return ;
         }
 

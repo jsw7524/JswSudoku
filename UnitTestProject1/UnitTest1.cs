@@ -587,7 +587,7 @@ namespace UnitTestProject1
         [TestMethod]
         public void TestMethod7()
         {
-            string dataJson = @"[[0, 8,0,0,4,0,9,1,0],[0,2,0,3,5,0,0,7,8],[5,7,0,0,0,0,0,0,0],[0,1,0,0,7,5,0,6,0],[0,5,0,6,0,0,3,0,7],[0,0,7,0,0,3,4,0,1],[7,3,1,9,8,0,5,0,0],[0,0,0,0,0,0,0,0,0],[0,6,0,0,0,0,0,8,2]]";
+            string dataJson = @"[[0,8,0,0,4,0,9,1,0],[0,2,0,3,5,0,0,7,8],[5,7,0,0,0,0,0,0,0],[0,1,0,0,7,5,0,6,0],[0,5,0,6,0,0,3,0,7],[0,0,7,0,0,3,4,0,1],[7,3,1,9,8,0,5,0,0],[0,0,0,0,0,0,0,0,0],[0,6,0,0,0,0,0,8,2]]";
             int[,] data = JsonConvert.DeserializeObject<int[,]>(dataJson);
             SudokuBoard board = new SudokuBoard(data);
             SudokuSolver solver = new SudokuSolver();
